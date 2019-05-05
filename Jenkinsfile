@@ -34,7 +34,6 @@ pipeline {
                 script {
                     dir('.') {
                         sh 'echo "Analysis stage"'
-                        sh './gradlew clean test checkstyleMain spotbugsMain'
                     }
                 }
             }
