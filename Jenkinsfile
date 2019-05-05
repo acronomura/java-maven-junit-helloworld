@@ -34,14 +34,14 @@ pipeline {
                 script {
                     dir('.') {
                         sh 'echo "Analysis stage"'
-                        sh 'mvn checkstyle:checkstyle'
+                        sh 'mvn -batch-mode -V -U -e checkstyle:checkstyle findbugs:findbugs'
+                        
+                        def checkstyle = scanForIssues tool: checkStyle(pattern: checkstyleReport)
+                        publishIssues issues: [checkstyle]
+                        
+                        def spotbugs = scanForIssues tool: spotBugs(pattern: spotbugsReport)
+                        publishIssues issues: [spotbugs]
                     }
-                }
-            }
-            post {
-                success {
-                    recordIssues tool: checkStyle(pattern: checkstyleReport)
-                    recordIssues tool: spotBugs(pattern: spotbugsReport)
                 }
             }
         }
