@@ -4,6 +4,8 @@ pipeline {
     }
     environment {
         docker_image_name = "java8-maven3-junit5"
+        checkstyleReport = "checkstyle.xml"
+        spotbugsReport = "findbugs-exclude.xml"
     }
     
     agent {
@@ -36,6 +38,13 @@ pipeline {
                 }
             }
         }
+        post {
+            success {
+                recordIssues tool: checkStyle(pattern: checkstyleReport)
+                recordIssues tool: spotBugs(pattern: spotbugsReport)
+            }
+        }
+        
     }
 
 }
