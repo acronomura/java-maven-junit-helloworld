@@ -38,11 +38,11 @@ pipeline {
                     }
                 }
             }
-        }
-        post {
-            success {
-                recordIssues tool: checkStyle(pattern: checkstyleReport)
-                recordIssues tool: spotBugs(pattern: spotbugsReport)
+            post {
+                success {
+                    recordIssues tool: checkStyle(pattern: checkstyleReport)
+                    recordIssues tool: spotBugs(pattern: spotbugsReport)
+                }
             }
         }
         
